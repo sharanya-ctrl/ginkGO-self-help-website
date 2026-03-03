@@ -3,11 +3,12 @@
 A self-help web app focused on habit tracking, journaling, and long-term growth.
 
 ## Features
-##Habit tracker:
+### Habit tracker
 - Daily habit tracking with streak system
 - 21-Days habit Challenge system
 - Pause and resume streak
-##Digitial journal:
+- 
+### Digitial journal
 - Free and prompted journaling
 - Rich text formatting (bold, italic, color, alignment)
 - Lockable entries
