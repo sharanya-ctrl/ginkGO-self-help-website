@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital journal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h3 id="dateDisplay"></h3>
+<h1>Digital Journal</h1>
+<!-- HOME -->
+<div class="card" id="home">
+    <p>Choose what you'd like to do:</p>
+    <button id="freeBtn">✍️ Free Writing</button>
+    <button id="promptedBtn">🧠 Prompted Journal</button>
+    <button id="viewBtn">📖 View Entries</button>
+    <button id="lockBtn">🔐 Unlock Locked Entries</button>
+</div>
+
+<hr>
+
+<!-- TOOLBAR -->
+<div id="toolbar" style="display:none;">
+    <!-- Text style -->
+    <button onclick="format('bold')"><b>B</b></button>
+    <button onclick="format('italic')"><i>I</i></button>
+    <button onclick="format('underline')"><u>U</u></button>
+
+    <!-- Alignment -->
+    <button onclick="alignText('justifyLeft')">⬅</button>
+    <button onclick="alignText('justifyCenter')">⬍</button>
+    <button onclick="alignText('justifyRight')">➡</button>
+
+    <!-- Color -->
+    <input type="color" onchange="setColor(this.value)">
+</div>
+
+<!-- PROMPT CATEGORIES -->
+<div id="promptCategories" style="display:none;"></div>
+
+<!-- EDITOR -->
+<div id="editor" contenteditable="true"
+     style="
+        display:none;
+        background-color: #000;
+        color: #fff;
+        border: 1px solid #444;
+        padding: 15px;
+        min-height: 250px;
+        border-radius: 8px;
+        font-size: 16px;
+        line-height: 1.6;
+     ">
+</div>
+
+<br>
+
+<button id="saveBtn" style="display:none;">💾 Save Entry</button>
+<button id="lockEntryBtn" style="display:none;">🔒 Lock This Entry</button>
+<button id="backBtn" style="display:none;">⬅ Back</button>
+
+<input 
+  type="text" 
+  id="searchInput" 
+  placeholder="Search journal entries..."
+  style="padding:6px; width:200px;"
+>
+
+<button id="searchBtn">Search</button>
+<button id="clearSearch">Clear</button>
+<!-- VIEW ENTRIES -->
+<div class="card" id="entriesSection" style="display:none;"></div>
+<a href="home.html"><button>Go back to home</button></a>
+<script src="journal.js"></script> 
+</body>
+</html>

@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>21-Days Challenge</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+<div class="card">
+    <h1>21-Days Challenge</h1>
+
+    <!-- Start Screen -->
+    <div id="startScreen">
+      <input id="challengeInput" placeholder="Enter habit">
+      <button id="startChallenge">Start Challenge</button>
+    </div>
+
+    <!-- Challenge Screen -->
+    <div id="challengeScreen" style="display:none;">
+      <p id="challengeName"></p>
+      <p id="dayCount"></p>
+
+      <progress id="progressBar" max="21" value="0"></progress>
+
+      <p id="motivation"></p>
+
+      <button id="markDone">Mark today as done</button>
+    </div>
+
+    <!-- Completion Screen -->
+    <div id="completeScreen" style="display:none;">
+      <h2>🎉 Congratulations 🎉</h2>
+      <p>You completed the 21-Day Challenge</p>
+      <p>🏅 Habit Builder Badge Unlocked</p>
+    </div>
+
+    <a href="habit.html">Go back</a>
+</div>
+    <script src="script.js"></script>
+  </body>
+</html>
