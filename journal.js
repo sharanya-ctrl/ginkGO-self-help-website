@@ -175,22 +175,25 @@ function viewEntries(showLocked, keyword = "") {
 
     const entries = JSON.parse(localStorage.getItem("entries") || "[]");
 
-    entries.forEach((e, i) => {
-        if (e.locked && !showLocked) return;
-        // 🔍 SEARCH FILTER (added)
-        if (keyword) {
-            const text = e.content.toLowerCase();
-            if (!text.includes(keyword.toLowerCase())) return;
-        }
-        const div = document.createElement("div");
-        div.style.border = "1px solid gray";
-        div.style.margin = "10px";
-        div.style.padding = "10px";
+    entries
+        .map((e, i) => ({ e, i }))
+        .reverse()
+        .forEach(({ e, i }) => {
+            if (e.locked && !showLocked) return;
+            // 🔍 SEARCH FILTER (added)
+            if (keyword) {
+                const text = e.content.toLowerCase();
+                if (!text.includes(keyword.toLowerCase())) return;
+            }
+            const div = document.createElement("div");
+            div.style.border = "1px solid gray";
+            div.style.margin = "10px";
+            div.style.padding = "10px";
 
-        // Remove HTML tags and limit text length
-        const previewText = e.content.replace(/<[^>]+>/g, "").slice(0, 100);
+            // Remove HTML tags and limit text length
+            const previewText = e.content.replace(/<[^>]+>/g, "").slice(0, 100);
 
-        div.innerHTML = `
+            div.innerHTML = `
     <b>${e.type}</b> | ${e.date}
     ${e.locked ? "🔒" : ""}
     <p style="color:gray; margin-top:5px;">
@@ -199,8 +202,8 @@ function viewEntries(showLocked, keyword = "") {
     <button onclick="openEntry(${i})">View</button>
     <button onclick="deleteEntry(${i})">Delete</button>
 `;
-        entriesSection.appendChild(div);
-    });
+            entriesSection.appendChild(div);
+        });
 }
 searchBtn.onclick = () => {
     const keyword = searchInput.value.trim();
