@@ -63,7 +63,7 @@ freeBtn.onclick = () => {
     currentType = "Free Writing";
     lockCurrentEntry = false;
     editor.innerHTML = "";
-    editor.style.textAlign = "left"; 
+    editor.style.textAlign = "left";
     editor.style.display = toolbar.style.display =
         saveBtn.style.display = lockEntryBtn.style.display =
         backBtn.style.display = "block";
@@ -187,13 +187,18 @@ function viewEntries(showLocked, keyword = "") {
         div.style.margin = "10px";
         div.style.padding = "10px";
 
+        // Remove HTML tags and limit text length
+        const previewText = e.content.replace(/<[^>]+>/g, "").slice(0, 100);
+
         div.innerHTML = `
-            <b>${e.type}</b> | ${e.date}
-            ${e.locked ? "🔒" : ""}
-            <br><br>
-            <button onclick="openEntry(${i})">View</button>
-            <button onclick="deleteEntry(${i})">Delete</button>
-        `;
+    <b>${e.type}</b> | ${e.date}
+    ${e.locked ? "🔒" : ""}
+    <p style="color:gray; margin-top:5px;">
+        ${previewText}...
+    </p>
+    <button onclick="openEntry(${i})">View</button>
+    <button onclick="deleteEntry(${i})">Delete</button>
+`;
         entriesSection.appendChild(div);
     });
 }
