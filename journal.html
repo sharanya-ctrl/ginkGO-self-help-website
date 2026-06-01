@@ -40,35 +40,19 @@
 <div id="promptCategories" style="display:none;"></div>
 
 <!-- EDITOR -->
-<div id="editor" contenteditable="true"
-     style="
-        display:none;
-        background-color: #000;
-        color: #fff;
-        border: 1px solid #444;
-        padding: 15px;
-        min-height: 250px;
-        border-radius: 8px;
-        font-size: 16px;
-        line-height: 1.6;
-     ">
+ <div id="editor" contenteditable="true" style="display:none;"></div>
+
+<div class="editor-actions">
+  <button id="saveBtn" style="display:none;">💾 Save Entry</button>
+  <button id="lockEntryBtn" style="display:none;">🔒 Lock This Entry</button>
+  <button id="backBtn" style="display:none;">⬅ Back</button>
 </div>
 
-<br>
-
-<button id="saveBtn" style="display:none;">💾 Save Entry</button>
-<button id="lockEntryBtn" style="display:none;">🔒 Lock This Entry</button>
-<button id="backBtn" style="display:none;">⬅ Back</button>
-
-<input 
-  type="text" 
-  id="searchInput" 
-  placeholder="Search journal entries..."
-  style="padding:6px; width:200px;"
->
-
-<button id="searchBtn">Search</button>
-<button id="clearSearch">Clear</button>
+<div class="search-wrap">
+  <input type="text" id="searchInput" placeholder="Search journal entries...">
+  <button id="searchBtn">Search</button>
+  <button id="clearSearch">Clear</button>
+</div>
 <!-- VIEW ENTRIES -->
 <div class="card" id="entriesSection" style="display:none;"></div>
 <a href="index.html"><button>Go back to home</button></a>

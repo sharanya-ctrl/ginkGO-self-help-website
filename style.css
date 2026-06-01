@@ -1,52 +1,532 @@
-h1{
-text-align: center;
-font-size: 46px;
-}
-body{
-    background-color: #F2BED1;
-}
-p{
-    text-align: center;
-    font-size: 18px;
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+
+/* 🌸 BACKGROUND & GENERAL */
+:root {
+  --bg-gradient: linear-gradient(135deg, #0f172a 0%, #170f2a 100%);
+  --primary: #8b5cf6;
+  --secondary: #ec4899;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.08);
 }
 
-#btn {
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  font-family: 'Outfit', sans-serif;
+  margin: 0;
+  padding: 20px;
+  color: var(--text-main);
+  min-height: 100vh;
   display: flex;
-  flex-direction: column;   
-  align-items: center;      
-  gap: 12px;                
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow-x: hidden;
 }
+
+/* Dynamic Ambient Background Elements */
+body::before, body::after {
+  content: '';
+  position: fixed;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  filter: blur(120px);
+  z-index: -1;
+  animation: float 10s infinite ease-in-out alternate;
+  pointer-events: none;
+}
+
+body::before {
+  top: -150px;
+  left: -200px;
+  background: rgba(139, 92, 246, 0.15);
+}
+
+body::after {
+  bottom: -150px;
+  right: -200px;
+  background: rgba(236, 72, 153, 0.15);
+  animation-delay: -5s;
+}
+
+@keyframes float {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(30px, 50px) scale(1.1); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ✒️ TYPOGRAPHY */
+h1 {
+  text-align: center;
+  font-size: 2.8rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: fade-in 0.8s ease-out;
+}
+
+h3 {
+  text-align: center;
+  font-weight: 400;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+}
+
+p {
+  color: var(--text-muted);
+  text-align: center;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* 📦 GLASSMORPHISM CARDS */
+.card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-top: 1px solid rgba(255,255,255,0.15);
+  border-left: 1px solid rgba(255,255,255,0.15);
+  padding: 40px;
+  border-radius: 24px;
+  max-width: 600px;
+  width: 100%;
+  margin: 20px auto;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+  animation: fade-in 1s ease-out;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+/* 🔘 BUTTONS & LINKS */
+#btn, #home, .search-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.search-wrap {
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+a {
+  text-decoration: none;
+  width: 100%;
+  max-width: 280px;
+  display: flex;
+  justify-content: center;
+  color: var(--text-muted);
+  transition: color 0.3s ease;
+  font-weight: 600;
+}
+
+a:hover {
+  color: var(--primary);
+}
+
 button {
-  background-color:#F8E8EE;
-  color: #41431B;
-  border: 1px solid #F2BED1;
-  width:200px;
-  padding: 8px 16px;
-  font-size: 14px;
-  border-radius: 6px;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.8), rgba(236, 72, 153, 0.8));
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.1);
+  width: 100%;
+  max-width: 280px;
+  padding: 14px 24px;
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 600;
+  border-radius: 14px;
   cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
 }
-#left{
+
+button::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%; width: 50%; height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
+  transform: skewX(-20deg);
+  transition: 0.5s;
+}
+
+button:hover::before {
+  left: 150%;
+}
+
+button:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(236, 72, 153, 0.4);
+}
+
+button:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+/* 🧰 TOOLBAR */
+#toolbar {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 20px 0;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 16px;
+  border: 1px solid var(--glass-border);
+  width: 100%;
+  max-width: 700px;
+}
+
+#toolbar button {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  font-size: 1.2rem;
+  background: var(--glass-bg);
+  border-radius: 10px;
+  box-shadow: none;
+}
+
+#toolbar button:hover {
+  background: rgba(255,255,255,0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+#toolbar input[type="color"] {
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* ✍️ EDITOR */
+#editor {
+  display: none;
+  background: rgba(15, 23, 42, 0.6);
+  color: var(--text-main);
+  padding: 24px;
+  min-height: 300px;
+  border-radius: 16px;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  width: 100%;
+  max-width: 700px;
+  margin: 25px auto;
+  border: 1px solid var(--glass-border);
+  box-shadow: inset 0 2px 15px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+#editor:focus {
+  border-color: rgba(139, 92, 246, 0.5);
+  box-shadow: inset 0 2px 15px rgba(0,0,0,0.3), 0 0 20px rgba(139, 92, 246, 0.2);
+}
+
+/* ✍️ EDITOR ACTIONS (Buttons below editor) */
+.editor-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px;
+  width: 100%;
+  max-width: 700px;
+  margin-bottom: 25px;
+}
+
+.editor-actions button {
+  width: auto;
+  min-width: 160px;
+  margin: 0; 
+}
+
+/* 🧠 PROMPT BUTTONS */
+#promptCategories {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px auto;
+  max-width: 700px;
+}
+
+#promptCategories button {
+  width: auto;
+  max-width: none;
+  padding: 10px 22px;
+  font-size: 0.95rem;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: none;
+  border: 1px solid var(--glass-border);
+}
+
+#promptCategories button:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255,255,255,0.3);
+  transform: translateY(-2px);
+}
+
+/* 🔍 INPUTS */
+input {
+  background: rgba(0,0,0,0.25);
+  border: 1px solid var(--glass-border);
+  color: var(--text-main);
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 400px;
+  transition: all 0.3s ease;
+  outline: none;
+  backdrop-filter: blur(10px);
+}
+
+input:focus {
+  border-color: rgba(139, 92, 246, 0.6);
+  background: rgba(0,0,0,0.35);
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+}
+
+input::placeholder {
+  color: rgba(255,255,255,0.3);
+}
+
+/* 📖 ENTRY CARDS */
+.entry-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid var(--glass-border);
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding: 24px;
+  margin: 16px auto;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+  animation: fade-in 0.6s ease-out backwards;
+}
+
+.entry-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-3px);
+  border-color: rgba(255,255,255,0.15);
+}
+
+.entry-preview {
+  color: var(--text-muted);
+  margin-top: 12px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.entry-actions {
+  margin-top: 16px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.entry-actions button {
+  width: auto;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  max-width: none;
+  background: rgba(255,255,255,0.1);
+  box-shadow: none;
+  border-radius: 8px;
+}
+
+.entry-actions button:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+/* DECORATIVE LINE */
+hr {
+  border: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+  margin: 30px auto;
+  width: 100%;
+  max-width: 600px;
+}
+
+/* HABIT LIST STYLING */
+#habitList {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+#habitList > div {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--glass-border);
+  padding: 16px 20px;
+  border-radius: 16px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+#habitList > div:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+#habitList > div input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  cursor: pointer;
+  accent-color: var(--primary);
+  flex-shrink: 0;
+}
+
+#habitList > div span {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+#habitList > div span:first-of-type {
+  flex-grow: 1; /* Makes name take up space */
   text-align: left;
 }
-#editor * {
-    color: white;
+
+#habitList > div span:last-of-type {
+  color: #fbbf24; /* Make streak fire pop */
+  font-weight: 800;
+  white-space: nowrap;
 }
-.card{
-    background-color: #FDCEDF;
-    border: 1px solid #F8E8EE;
-    padding: 20px;
-    border-radius: 10px;
-    width: 850px;
-    margin: 50px auto;
+
+#habitList > div button {
+  width: auto;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  border-radius: 10px;
+  max-width: none;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+  color: var(--text-main);
+  border: 1px solid transparent;
+  flex-shrink: 0;
 }
-#toolbar{
- button{
-width: 20px;
- } 
+
+#habitList > div button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: none;
 }
-#promptCategories{
-    button{
-      width:190px;
-    }
+
+#habitList > div button:nth-of-type(2) {
+  /* Delete button */
+  background: rgba(239, 68, 68, 0.1);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+#habitList > div button:nth-of-type(2):hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fef2f2;
+}
+
+/* TABLE & LIST overrides for QA page */
+table, ul, li {
+  text-align: left;
+  line-height: 1.8;
+  color: var(--text-main);
+  padding-left: 20px;
+}
+
+table {
+  background: var(--glass-bg);
+  padding: 24px;
+  border-radius: 16px;
+  border: 1px solid var(--glass-border);
+  display: inline-block;
+  margin-top: 20px;
+  backdrop-filter: blur(10px);
+}
+
+/* 🚀 PROGRESS BAR STYLING */
+progress {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  max-width: 400px;
+  height: 18px;
+  border-radius: 10px;
+  margin: 25px auto;
+  display: block;
+  border: 1px solid var(--glass-border);
+  background-color: rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0 4px 6px rgba(0,0,0,0.3);
+  overflow: hidden;
+}
+
+progress::-webkit-progress-bar {
+  background-color: transparent;
+}
+
+progress::-webkit-progress-value {
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  transition: width 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border-radius: 10px;
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.3), 0 0 12px rgba(236, 72, 153, 0.5);
+}
+
+progress::-moz-progress-bar {
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  border-radius: 10px;
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.3), 0 0 12px rgba(236, 72, 153, 0.5);
+}
+
+/* 📱 MOBILE RESPONSIVENESS */
+@media (max-width: 600px) {
+  body { padding: 15px; }
+  h1 { font-size: 2.2rem; }
+  .card { padding: 24px; border-radius: 20px; }
+  button { padding: 12px 20px; width: 100%; }
+  #editor { min-height: 200px; padding: 16px; font-size: 1rem; }
+  .search-wrap { flex-direction: column; align-items: center; }
+  .entry-card { padding: 18px; }
 }

@@ -144,6 +144,12 @@ promptedBtn.onclick = () => {
         };
         categoriesDiv.appendChild(b);
     }
+    setTimeout(() => {
+  categoriesDiv.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+}, 100);
 };
 
 // ---------- SAVE ----------
@@ -170,9 +176,20 @@ saveBtn.onclick = () => {
 viewBtn.onclick = () => viewEntries(false);
 
 function viewEntries(showLocked, keyword = "") {
-    entriesSection.innerHTML = "<h3>Saved Entries</h3>";
-    entriesSection.style.display = backBtn.style.display = "block";
+    // Hide everything else
+    editor.style.display = "none";
+    toolbar.style.display = "none";
+    saveBtn.style.display = "none";
+    lockEntryBtn.style.display = "none";
+    categoriesDiv.style.display = "none";
 
+    entriesSection.innerHTML = "<h3>Saved Entries</h3>";
+    entriesSection.style.display = "block";
+    backBtn.style.display = "block";
+    entriesSection.scrollIntoView({ 
+            behavior: "smooth", 
+            block: "start" 
+});
     const entries = JSON.parse(localStorage.getItem("entries") || "[]");
 
     entries
@@ -180,28 +197,27 @@ function viewEntries(showLocked, keyword = "") {
         .reverse()
         .forEach(({ e, i }) => {
             if (e.locked && !showLocked) return;
-            // 🔍 SEARCH FILTER (added)
+
             if (keyword) {
                 const text = e.content.toLowerCase();
                 if (!text.includes(keyword.toLowerCase())) return;
             }
-            const div = document.createElement("div");
-            div.style.border = "1px solid gray";
-            div.style.margin = "10px";
-            div.style.padding = "10px";
 
-            // Remove HTML tags and limit text length
+            const div = document.createElement("div");
+            div.className = "entry-card";
+
             const previewText = e.content.replace(/<[^>]+>/g, "").slice(0, 100);
 
             div.innerHTML = `
-    <b>${e.type}</b> | ${e.date}
-    ${e.locked ? "🔒" : ""}
-    <p style="color:gray; margin-top:5px;">
-        ${previewText}...
-    </p>
-    <button onclick="openEntry(${i})">View</button>
-    <button onclick="deleteEntry(${i})">Delete</button>
-`;
+                <b>${e.type}</b> | ${e.date} ${e.locked ? "🔒" : ""}
+                <p class="entry-preview">${previewText}...</p>
+                <div class="entry-actions">
+                    <button onclick="openEntry(${i})">View</button>
+                    <button onclick="deleteEntry(${i})">Delete</button>
+                </div>
+            `;
+          
+
             entriesSection.appendChild(div);
         });
 }
@@ -218,15 +234,31 @@ window.openEntry = (i) => {
     const entries = JSON.parse(localStorage.getItem("entries"));
     const e = entries[i];
 
+    // 🔒 check lock
     if (e.locked && !unlockJournal()) {
         alert("Locked entry ❌");
         return;
     }
 
-    editor.innerHTML = e.content;
-    editor.style.display = toolbar.style.display = backBtn.style.display = "block";
-};
+    // ❗ HIDE entries list
+    entriesSection.style.display = "none";
 
+    // ✅ SHOW editor cleanly
+    editor.innerHTML = e.content;
+    editor.style.display = "block";
+    toolbar.style.display = "flex";
+    backBtn.style.display = "block";
+
+    // ❌ hide unnecessary buttons
+    saveBtn.style.display = "none";
+    lockEntryBtn.style.display = "none";
+
+    // ✨ scroll to editor
+    editor.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+};
 window.deleteEntry = (i) => {
     const entries = JSON.parse(localStorage.getItem("entries"));
     entries.splice(i, 1);
